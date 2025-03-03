@@ -1,0 +1,10 @@
+import netflix.MyProjectPlugin
+
+plugins {
+    id 'java'
+}
+apply plugin: MyProjectPlugin
+
+repositories {
+    mavenCentral()
+}

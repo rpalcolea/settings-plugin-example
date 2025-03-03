@@ -1,0 +1,31 @@
+pluginManagement {
+    repositories {
+       mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id "com.gradle.develocity" version "3.19.2"
+}
+
+rootProject.name = 'settings-plugin-example'
+
+apply plugin: MySettingsPlugin
+
+class MySettingsPlugin implements Plugin<Settings> {
+    @Override
+    void apply(Settings settings) {
+        settings.gradle.rootProject {project ->
+            rootProject.plugins.withType(JavaPlugin).configureEach {
+                def dependencyHandler = project.buildscript.dependencies
+                def buildClasspathDependencies = ['com.netflix.nebula:nebula-project-plugin:11.0.0']
+                buildClasspathDependencies.each {
+                    dependencyHandler.add("classpath", it)
+                }
+            }
+
+        }
+    }
+}
+
